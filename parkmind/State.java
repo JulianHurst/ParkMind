@@ -5,52 +5,23 @@
  */
 package parkmind;
 
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
 
 /**
  *
  * @author juju
  */
-public class State {
-    protected StackPane root = new StackPane();
-    protected Stage stage = new Stage();
-    
-    public enum Sub {
-        sub_MainMenu, sub_Wordex
-    };
-    protected Sub next;
-    
-    State(){
-        next=State.Sub.sub_MainMenu;        
-    }
-    
-    State(State.Sub next, Stage stage){
-        this.next=next;
-        this.stage=stage;
-    }
+interface State {
+    VBox root = new VBox(8);              
+
+    void hidewords();
             
-    State changeState(){
-        switch(next){
-            case sub_MainMenu:
-                return new MainMenu();                
-            case sub_Wordex:
-                return new WordEx();
-            default:
-                System.out.println("Error");
-        }
-        return this;
-    }
+    //State changeState();
     
-    StackPane getRoot(){
-        return root;
-    }
+    VBox getRoot();
     
-    Sub getnext(){
-        return next;
-    }
+    void inctimer();
+    int gettimer();
     
-    void setStage(Stage S){
-        stage=S;
-    }
+   //Sub getnext();
 }

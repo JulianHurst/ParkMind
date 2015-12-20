@@ -5,39 +5,33 @@
  */
 package parkmind;
 
-import javafx.stage.Stage;
 
 /**
  *
  * @author juju
  */
 public class ParkScene {
-    private State S=new State();
-    private State.Sub next;
+    private State S;    
+    private boolean changed=false;
     
     ParkScene(){
-        next=S.getnext();
-    }
-    
-    ParkScene(State.Sub S,Stage stage){
-        this.S=new State(S,stage);
-    }
-    void updateState(){
-        next=S.getnext();
-        S=S.changeState();        
-    }
+        S=new MainMenu(this);        
+    }    
     
     State getState(){
         return S;
     }
     
-    boolean stateChanged(){
-        if(this.next!=S.getnext())
-            return true;
-        return false;
+    void setState(final State S){
+        this.S=S;
+        changed=true;
     }
     
-    State.Sub getnext(){
-        return next;
+    void touch(){
+        changed=false;
     }
+    
+    boolean getchanged(){
+        return changed;
+    }      
 }

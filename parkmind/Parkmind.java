@@ -18,25 +18,27 @@ import javafx.util.Duration;
  *
  * @author juju
  */
-public class Parkmind extends Application {
+public class Parkmind extends Application {   
     
     @Override
-    public void start(Stage primaryStage) throws IOException {                                      
-        ParkScene P= new ParkScene();
-        ParkScene P1= new ParkScene(State.Sub.sub_Wordex,new Stage());
-        P.updateState();  
+    public void start(Stage primaryStage) throws IOException {           
+        ParkScene P= new ParkScene();                
         //Parent root=FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         
         Scene scene = new Scene(P.getState().getRoot(), 600, 500);
         
         primaryStage.setTitle("ParkMind");
         primaryStage.setScene(scene);
-        primaryStage.show();  
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.millis(60), (ActionEvent event) -> {
-            if(P.stateChanged()){
-                P.updateState();
-                primaryStage.setScene(new Scene(P.getState().getRoot(),600,500));
+        primaryStage.show();          
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.millis(50), (ActionEvent event) -> { 
+            if(P.getchanged()){
+                P.touch();                
             }
+            if(P.getState() instanceof WordEx){                
+                P.getState().inctimer();
+                if(P.getState().gettimer()==100)
+                    P.getState().hidewords();
+            }                           
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();   
