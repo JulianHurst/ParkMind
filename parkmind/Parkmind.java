@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package parkmind;
 
 import java.io.IOException;
 import javafx.animation.KeyFrame;
@@ -37,7 +36,7 @@ public class Parkmind extends Application {
             if(P.getState() instanceof WordEx){                
                 P.getState().inctimer();
                 if(P.getState().gettimer()==100)
-                    P.getState().hidewords();
+                    P.getState().hide();
             }                           
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);

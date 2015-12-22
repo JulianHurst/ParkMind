@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package parkmind;
 
 import javafx.scene.layout.VBox;
 
@@ -12,16 +11,13 @@ import javafx.scene.layout.VBox;
  * @author juju
  */
 interface State {
-    VBox root = new VBox(8);              
+    VBox root = new VBox(10);              
 
-    void hidewords();
-            
-    //State changeState();
+    void hide();                
     
     VBox getRoot();
     
     void inctimer();
     int gettimer();
-    
-   //Sub getnext();
+       
 }

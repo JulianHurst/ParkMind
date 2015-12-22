@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package parkmind;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -22,19 +21,23 @@ import javafx.scene.layout.VBox;
  * @author juju
  */
 public class MainMenu implements State{      
-    ListView<String> list = new ListView();
+    ListView<String> list = new ListView<>();
     MainMenu(ParkScene context){
         root.getChildren().clear();
         Button b=new Button("Quit");
-        ObservableList<String> items=FXCollections.observableArrayList ("3 Word Exercise", "Other");    
+        ObservableList<String> items=FXCollections.observableArrayList ("3 Word Exercise", "Number Exercise");    
         list.setItems(items);
         list.setOnMouseClicked((MouseEvent event) -> {
-            if(event.getClickCount()==2 && list.getSelectionModel().getSelectedIndex()==0){
-                try {
-                    context.setState(new WordEx(context));
-                } catch (IOException ex) {
-                    Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            if(event.getClickCount()==2){
+                if(list.getSelectionModel().getSelectedIndex()==0){
+                    try {
+                        context.setState(new WordEx(context));
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
+                if(list.getSelectionModel().getSelectedIndex()==1)
+                    context.setState(new NumEx(context));
             }
         }); 
         b.setOnMouseClicked((MouseEvent event) -> {
@@ -52,7 +55,7 @@ public class MainMenu implements State{
     }
     
     @Override
-    public void hidewords(){}
+    public void hide(){}
     
     @Override
     public void inctimer(){}
