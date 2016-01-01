@@ -102,22 +102,26 @@ public class WordEx implements State {
         y=R.nextInt(2328)+1;
         z=R.nextInt(2328)+1;
         t.setText("Memorize these words and their positions :");
-        BufferedReader br = new BufferedReader(new FileReader("nounlist-en.txt"));
+	InputStream in = getClass().getResourceAsStream("/nounlist-en.txt");
+	BufferedReader br = new BufferedReader(new InputStreamReader(in));
         for(int i=0;i<x;i++)
             br.readLine();
         one=br.readLine();
-        br = new BufferedReader(new FileReader("nounlist-en.txt"));
+        in = getClass().getResourceAsStream("/nounlist-en.txt");
+        br = new BufferedReader(new InputStreamReader(in));
         for(int i=0;i<y;i++)
             two=br.readLine();
         two=br.readLine();
-        br = new BufferedReader(new FileReader("nounlist-en.txt"));
+        in = getClass().getResourceAsStream("/nounlist-en.txt");
+        br = new BufferedReader(new InputStreamReader(in));
         for(int i=0;i<z;i++)
             three=br.readLine();
         three=br.readLine();
         if(wins>=5){
             list.setPrefHeight(150);
             a=R.nextInt(2328)+1;
-            br = new BufferedReader(new FileReader("nounlist-en.txt"));
+            in = getClass().getResourceAsStream("/nounlist-en.txt");
+            br = new BufferedReader(new InputStreamReader(in));
             for(int i=0;i<a;i++)
                 four=br.readLine();
             four=br.readLine();
