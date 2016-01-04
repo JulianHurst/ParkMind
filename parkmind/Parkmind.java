@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+//package parkmind;
+
 import java.io.IOException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

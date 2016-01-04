@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 
+//package parkmind;
+
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import java.util.Random;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.canvas.Canvas;
@@ -197,6 +198,99 @@ public class NumEx implements State {
         root.getChildren().add(A);
     }
     
+    public void reset(){    
+        int x,n;
+        char c,y;
+        //T=new TableView<>();
+        //T.getColumns().clear();
+        T.getItems().clear();
+        T.getColumns().clear();
+        TableColumn<Row,String> one=new TableColumn<>();
+        TableColumn<Row,String> two=new TableColumn<>();
+        TableColumn<Row,String> three=new TableColumn<>();            
+        one.setSortable(false);
+        one.setResizable(false);
+        two.setSortable(false);
+        two.setResizable(false);
+        three.setSortable(false);
+        three.setResizable(false);
+        
+        for(int i=0;i<15;i++){
+            int d;
+            n=R.nextInt(3);
+            c=alphabet.charAt(R.nextInt(alphabet.length()));
+            x=R.nextInt(7)+1;
+            y=alphabet.charAt(R.nextInt(alphabet.length()));
+            if(i%3!=0)
+                switch (n) {
+                    case 0:
+                        items.add(new Row(Character.toString(c),Character.toString(y),Integer.toString(x)));
+                        break;
+                    case 1:
+                        items.add(new Row(Character.toString(c),Integer.toString(x),Character.toString(y)));            
+                        break;
+                    case 2:
+                        items.add(new Row(Integer.toString(x),Character.toString(c),Character.toString(y)));
+                        break;
+                    default:
+                        break;
+                }            
+            else{
+                d=R.nextInt(3)+1;
+                switch (n) {
+                    case 0:
+                        items.add(new Row(Character.toString(c),Integer.toString(d),Integer.toString(x)));
+                        break;
+                    case 1:
+                        items.add(new Row(Integer.toString(d),Integer.toString(x),Character.toString(y)));            
+                        break;
+                    case 2:
+                        items.add(new Row(Integer.toString(x),Character.toString(c),Integer.toString(d)));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        one.setMinWidth(100);
+        one.setCellValueFactory(
+                new PropertyValueFactory<>("oned"));      
+        two.setMinWidth(100);
+        two.setCellValueFactory(
+                new PropertyValueFactory<>("twod"));    
+        three.setMinWidth(100);
+        three.setCellValueFactory(
+                new PropertyValueFactory<>("threed"));         
+        T.getColumns().add(one);
+        T.getColumns().add(two);
+        T.getColumns().add(three);        
+        high=highest=0;
+        ObservableList<Row> list = T.getItems();
+        int[] b=new int[8];
+        for(int i=0;i<b.length;i++)
+            b[i]=0;
+        for(int i=0;i<15;i++){
+                if(list.get(i).getoned().matches("[0-9]")){
+                    b[Integer.parseInt(list.get(i).getoned())]++;
+                }
+                if(list.get(i).gettwod().matches("[0-9]")){
+                    b[Integer.parseInt(list.get(i).gettwod())]++;
+                }
+                if(list.get(i).getthreed().matches("[0-9]")){
+                    b[Integer.parseInt(list.get(i).getthreed())]++;
+                }                
+        }
+        for (int i=0;i<b.length;i++){           
+            if(high<=b[i]){
+                high=b[i];
+                highest=i;
+            }
+        }
+        exp.setText("Count the sum of "+highest+"'s");
+        ans.setText("");
+        root.getChildren().add(A);
+    }
+    
     @Override
     public int gettimer(){
         return 0;
@@ -212,6 +306,11 @@ public class NumEx implements State {
     
     @Override
     public void hide(){
+        Button again = new Button("Again");
+        again.setOnMouseClicked((MouseEvent event) -> {
+            root.getChildren().remove(again);
+            reset();
+        });
         root.getChildren().remove(A);
         if(ans.getText().isEmpty())
             exp.setText("Sorry. The correct sum was : "+high*highest); 
@@ -220,7 +319,8 @@ public class NumEx implements State {
         }
         else
             exp.setText("Sorry, that sum is incorrect. The correct sum was : "+high*highest); 
-        ObservableList<Row> list=T.getItems();                                
+        ObservableList<Row> list=T.getItems();      
+        root.getChildren().add(again);
     }
     
 }
